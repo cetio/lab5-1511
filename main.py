@@ -39,3 +39,43 @@ class WordAnalyzer:
     def print_report(self):
         for word in sorted(self.__frequencies.keys()):
             print(f"{word:<7}:: {self.__frequencies[word]}")
+
+def main():
+    files = {
+        "1": Path("monte_cristo.txt"),
+        "2": Path("princess_mars.txt"),
+        "3": Path("Tarzan.txt"),
+        "4": Path("treasure_island.txt"),
+    }
+    exit_choice = str(len(files) + 1)
+
+    while True:
+        print("--- Word Analyzer ---")
+        print("Please select a file to analyze:")
+        for key, path in files.items():
+            print(f"{key}. {path.stem.replace('_', ' ').title()}")
+        print(f"{exit_choice}. Exit")
+        print()
+
+        choice = input(f"Enter your choice (1-{exit_choice}): ")
+        print()
+
+        if choice == exit_choice:
+            print("Goodbye!")
+            break
+
+        if choice in files:
+            path = files[choice]
+            print(f"Processing '{path.name}'...")
+            print()
+            analyzer = WordAnalyzer(path)
+            if analyzer.process_file():
+                analyzer.print_report()
+        else:
+            print(f"Invalid choice. Please select from 1-{exit_choice}.")
+
+        print()
+        input("Press Enter to return to the menu... ")
+        print()
+
+main()
